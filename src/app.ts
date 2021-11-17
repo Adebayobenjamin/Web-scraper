@@ -1,36 +1,7 @@
-import cheerio from 'cheerio';
-import request from 'request';
-import fs, {createWriteStream} from 'fs';
-import readline, {createInterface} from "readline";
-import { stdin, stdout } from 'process';
+import { Scraper } from "./scraper";
 
-const rl = createInterface(stdin, stdout);
+const scraper = new Scraper("https://the-age.co");
 
+// scraper.getHTML()
 
-// request("https://www.hugsandeyes.com", ((err, response, html) => {
-
-// if(err) {
-//     console.log(err);
-//     return;
-// }
-
-// const $ = cheerio.load(html);
-
-const url = rl.question('input url ', (url: string) => {
-
-    rl.question('what attribute are you targeting e.g class, id, tag', (attr: string) => {
-
-        rl.question(`enter ${attr} value`, (value: string) => {
-            console.log(url, attr, value)
-        })
-       
-    })
-})
-
-
-
-// const div = $('.col-lg-4').text();
-
-// // createWriteStream('data.csv')
-
-// }));
+scraper.scrape("div", "a, p, span")
