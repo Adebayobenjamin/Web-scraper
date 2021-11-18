@@ -12,6 +12,7 @@ export class Scraper {
         
     }
 
+    // get html in order to view data that you want to scrape
     getHTML(){
 
         if(this.url == null) return console.log("invalid url");
@@ -26,21 +27,23 @@ export class Scraper {
 
         
     }
-
+    // scrape data using attribute (eg: class = .classname, id = #id) and the children elements under the attribute element
      scrape( attribute: string, childerenElement: string){
        
         if(this.url == null) return console.log("invalid url");
 
+        // create a new csv file
         const writeStream =  createWriteStream(`scraper.csv`);
 
         //  Write headers
         writeStream.write(`S/N,${childerenElement} \n`)
 
-
+        // fetch html
          request(this.url, (err, response, html) => {
 
             if (err) return console.log(err);
 
+            // scrape using cheerio
             const $ = cheerio.load(html);
 
             const text = $(attribute);
@@ -65,23 +68,10 @@ export class Scraper {
                    x++;
 
                    
-                })
-
-                
-
-                
-    
-            
-           
+                })   
 
             console.log("Scrapping Done ....");
 
-        })
-
-       
-            
+        })  
      }
-
-    
-    
 }
