@@ -8,8 +8,6 @@ export class Scraper {
 
     constructor(url: string, ){
         this.url = url;
-        
-        
     }
 
     // get html in order to view data that you want to scrape
@@ -22,10 +20,7 @@ export class Scraper {
             if (err) return console.log(err);
 
             console.log(html)
-        })
-        
-
-        
+        })        
     }
     // scrape data using attribute (eg: class = .classname, id = #id) and the children elements under the attribute element
      scrape( attribute: string, childerenElement: string){
@@ -49,7 +44,6 @@ export class Scraper {
             const text = $(attribute);
 
             const children = childerenElement.split(",");
-
           
                 var  x = 1;
                 text.each((i, el) => {
