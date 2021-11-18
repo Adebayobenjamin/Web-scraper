@@ -34,7 +34,7 @@ export class Scraper {
         const writeStream =  createWriteStream(`scraper.csv`);
 
         //  Write headers
-        writeStream.write(`S/N,Attribute, Value \n`)
+        writeStream.write(`S/N,${childerenElement} \n`)
 
 
          request(this.url, (err, response, html) => {
@@ -47,25 +47,32 @@ export class Scraper {
 
             const children = childerenElement.split(",");
 
-            for (let x = 0; x < children.length; x++) {
-                const child = children[x];
-                let result = ""
-                
+          
+                var  x = 1;
                 text.each((i, el) => {
+                   var data = ""
+                    children.forEach(child => {
 
-                    const data = $(el).find(child).text().replace(/\s\s+/g, ' ');
+                        const result = $(el).find(child).text().replace(/\s\s+/g, ' ').replace(',', '');
 
-                    result += `${data.replace(/\s\s+/g, ' ')} \n`
-                
+                        data += `${result.replace(/\s\s+/g, ' ').replace(',', '')},`
+
+                    })
+
+                    console.log(data.substring(0, data.length - 1))
+                    //  Write to Row
+                   writeStream.write(`${x}, ${data.substring(0, data.length - 1)} \n`);
+                   x++;
+
                    
                 })
 
-                console.log(result.replace(/\s\s+/g, ' '));
+                
 
-                 //  Write to Row
-                 writeStream.write(`${x + 1}, ${child}, ${result.replace(/\s\s+/g, ' ')} \n`);
+                
     
-            }
+            
+           
 
             console.log("Scrapping Done ....");
 
